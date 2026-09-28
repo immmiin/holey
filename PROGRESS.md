@@ -16,7 +16,10 @@
   - [x] Home: hero (3D sock turns with scroll), product row (hover tints section + logo), accordion, testimonials, light marquee, spinning sock over wiped "Holey Holey", banner, story, rituals, social wall
   - [x] Cart drawer + fly-to-cart + washing-machine spin + toast were built early (needed by quick-add); polished in step 4
   - [x] Screenshot-reviewed at 1440 and 375 against reference/vibe
-- [ ] **Step 3 — Product grid (collection) + product detail pages**
+- [x] **Step 3 — Product grid (collection) + product detail pages**
+  - [x] /shop: title, filter pills (All / Pastel / Neutral), count ("6 Socks · 0 Pairs"), sort dropdown, ruled 4-col grid with Vibe's two wide cards, Motion layout animation, hover tints section
+  - [x] /socks/:slug: thumbs + outlined main box (3D drag viewer default), overline, title, copy, fake specs, locked qty (wiggle + "It's one sock." tooltip), ADD TO CART, logo takes the sock's accent; then testimonials, banner, "You may also like…"
+  - [x] Unknown slug renders the 404
 - [ ] **Step 4 — Cart drawer + checkout ending + 360° rotation + 3D hero**
 - [ ] **Step 5 — About / FAQ / 404 + mobile + motion polish + performance**
 - [ ] **Step 6 — Final pass: build, screenshot review, fixes, README**
@@ -73,4 +76,4 @@
 
 ## What's next
 
-Step 3: collection page (/shop) and product detail pages (/socks/:slug).
+Step 4: checkout ending screen, cart polish, verify fly-to-cart / spin / drag inertia with Playwright interaction script.
