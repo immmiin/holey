@@ -5,3 +5,9 @@ dist
 .vite
 screenshots/tmp
 screenshots/
+
+# env files
+.env
+.env.*
+!.env.example
+.vercel
