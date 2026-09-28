@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "assets": "node scripts/process-assets.mjs",
-    "shots": "node scripts/screenshots.mjs"
+    "shots": "node scripts/screenshots.mjs",
+    "test:ix": "node scripts/interactions.mjs",
+    "test:overflow": "node scripts/overflow.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

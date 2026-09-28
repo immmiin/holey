@@ -13,16 +13,15 @@ import './header.css';
 function CartButton({ className = '' }) {
   const { count, setOpen, spin, registerIcon } = useCart();
   const [scope, animate] = useAnimate();
-  const first = useRef(true);
+  const lastSpin = useRef(spin);
 
   useEffect(() => registerIcon(scope.current), [registerIcon, scope]);
 
   // washing-machine spin cycle whenever a sock lands in the cart
   useEffect(() => {
-    if (first.current) {
-      first.current = false;
-      return;
-    }
+    // only spin for a *new* add — not on mount (or StrictMode's double mount)
+    if (spin === lastSpin.current) return;
+    lastSpin.current = spin;
     if (reducedMotion()) return;
     animate(scope.current, { rotate: [0, -25, 1080 + 25, 1080], x: [0, -1.5, 1.5, 0] }, { duration: 1.25, ease: [0.65, 0, 0.25, 1] }).then(
       () => scope.current && animate(scope.current, { rotate: 0 }, { duration: 0 })

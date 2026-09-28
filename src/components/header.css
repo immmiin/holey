@@ -372,7 +372,8 @@
 }
 .mm__tile {
   position: relative;
-  aspect-ratio: 5 / 7;
+  height: 0;
+  padding-bottom: 140%; /* 5:7 — children are all absolute, so aspect-ratio alone collapses the grid rows */
   border-radius: 20px;
   overflow: hidden;
   text-decoration: none;
@@ -420,4 +421,7 @@
 }
 .mm__cta .oval {
   width: 100%;
+}
+.mm__body > * {
+  flex-shrink: 0; /* the body scrolls; its children keep their natural height */
 }

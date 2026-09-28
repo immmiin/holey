@@ -32,7 +32,11 @@
   - [x] 3D lighting in π units so the sock matches the photo colours
   - [x] Reduced motion: no Lenis, no scrubs/intros, no auto-rotate, static marquees/grain; content fully visible
   - [x] Perf: ~200 KB gz initial JS; three.js/R3F (265 KB gz) only loads when a sock enters the viewport, after idle; all below-fold images lazy + responsive WebP
-- [ ] **Step 6 — Final pass: build, screenshot review, fixes, README**
+- [x] **Step 6 — Final pass: build, screenshot review, fixes, README**
+  - [x] `.glb` drop-in verified with a temporary generated model (auto-detected, centred, scaled, lit) — removed afterwards
+  - [x] Fixed: mobile menu tiles collapsing, cart icon spinning on mount under StrictMode
+  - [x] `npm run build` passes; `vite preview` serves all routes; zero console errors across 10 routes × 3 widths; zero horizontal overflow
+  - [x] README (run, checks, deploy to Vercel, replacing assets) + `vercel.json` (SPA rewrite, caching, glb content type)
 
 ## What Vibe is made of (analysis notes)
 
@@ -85,6 +89,10 @@
 - CSS import order: global.css is imported first in main.jsx so component CSS can override shared utilities.
 - Playwright runs against the system Google Chrome (`channel: 'chrome'`) — no browser download needed.
 
-## What's next
+## What's next (all steps done)
 
-Step 6: final build, full screenshot review at 375/768/1440, fix leftovers, README (run + deploy to Vercel, incl. SPA rewrite).
+Ideas / things to replace:
+- Real `.glb` sock models in `public/models/` (currently a generated puffy mesh from the PNG; the back is the front mirrored).
+- More lifestyle photos — only two exist, so the social wall, rituals and testimonial avatars reuse crops of them.
+- A dedicated hero photo/video if you want Vibe's full-bleed photographic hero instead of the green ground.
+- Lighthouse run on the deployed site.
