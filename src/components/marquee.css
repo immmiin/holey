@@ -1,0 +1,49 @@
+.mq {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  background: var(--mq-bg);
+  color: var(--mq-fg);
+  padding-block: var(--mq-pad);
+  pointer-events: none;
+  user-select: none;
+}
+.mq__track {
+  display: flex;
+  width: max-content;
+}
+.mq__strip {
+  display: flex;
+  align-items: center;
+  gap: var(--mq-gap);
+  padding-inline-end: var(--mq-gap);
+  flex: none;
+}
+.mq__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mq-inner);
+  white-space: nowrap;
+}
+.mq__icon {
+  width: var(--mq-icon);
+  height: auto;
+  flex: none;
+}
+.mq__label {
+  font-family: var(--f-text);
+  font-weight: 400;
+  font-size: var(--mq-size);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mq__track {
+    animation: mq-move var(--mq-speed) linear infinite var(--mq-dir);
+  }
+}
+@keyframes mq-move {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}

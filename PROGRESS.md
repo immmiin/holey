@@ -11,7 +11,11 @@
   - [x] Vite + React + react-router + GSAP + Motion + Lenis + R3F/drei installed
   - [x] Sock backgrounds removed → `public/socks/clean/` (originals untouched)
   - [x] Responsive WebP → `public/img/**`, favicons/app icons/OG image → `public/icons/`
-- [ ] **Step 2 — Header / footer / home page (all sections)**
+- [x] **Step 2 — Header / footer / home page (all sections)**
+  - [x] Shell: top marquee, sticky header (transparent over hero → cream + rule), mega menu, search panel, mobile menu, footer, film grain, Lenis + ScrollTrigger, View Transitions
+  - [x] Home: hero (3D sock turns with scroll), product row (hover tints section + logo), accordion, testimonials, light marquee, spinning sock over wiped "Holey Holey", banner, story, rituals, social wall
+  - [x] Cart drawer + fly-to-cart + washing-machine spin + toast were built early (needed by quick-add); polished in step 4
+  - [x] Screenshot-reviewed at 1440 and 375 against reference/vibe
 - [ ] **Step 3 — Product grid (collection) + product detail pages**
 - [ ] **Step 4 — Cart drawer + checkout ending + 360° rotation + 3D hero**
 - [ ] **Step 5 — About / FAQ / 404 + mobile + motion polish + performance**
@@ -63,8 +67,10 @@
 - Hover images for product cards: generated macro crops of each sock's hole on the sock's own colour (Vibe uses a second photo; we only have one photo per sock).
 - Fonts: Fraunces (soft, chunky optical-size serif) is the closest free match for VC Henrietta.
 - Page transitions: react-router `viewTransition` links (same View Transitions API Vibe uses cross-document), custom fade/rise keyframes, disabled for reduced motion.
+- 3D fallback = puffy mesh generated from the PNG alpha (distance field → depth), front + back surfaces, Lambert lighting, ContactShadows. Hero sock sways idle instead of spinning freely so it never parks edge-on.
+- CSS import order: global.css is imported first in main.jsx so component CSS can override shared utilities.
 - Playwright runs against the system Google Chrome (`channel: 'chrome'`) — no browser download needed.
 
 ## What's next
 
-Step 2: build the app shell (grain, marquee, header, mega menu, footer) and every home section.
+Step 3: collection page (/shop) and product detail pages (/socks/:slug).

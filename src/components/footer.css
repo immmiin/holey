@@ -1,0 +1,238 @@
+.ft {
+  background: var(--cream);
+  color: var(--ink);
+  padding-block: var(--section-pad) 38px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.5vw, 52px);
+  overflow: hidden;
+}
+.ft__divider {
+  color: var(--ink);
+}
+.ft__row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-inline: 20px;
+}
+@media (min-width: 750px) {
+  .ft__row {
+    flex-direction: row;
+    gap: 2.5vw;
+    padding-inline: var(--gutter);
+  }
+}
+.ft__left {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.5vw, 52px);
+}
+@media (min-width: 750px) {
+  .ft__left {
+    width: 45.86vw;
+    flex: none;
+  }
+}
+.ft__news {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.5vw, 52px);
+}
+.ft__news-heading {
+  margin: 0;
+  font-family: var(--f-text);
+  font-weight: 400;
+  font-size: var(--fs-title);
+  line-height: 1.2;
+}
+.ft__form {
+  width: 100%;
+}
+@media (min-width: 750px) {
+  .ft__form,
+  .ft__done {
+    max-width: 36.46vw;
+  }
+}
+.ft__field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: var(--rule) solid var(--ink);
+  padding-block-end: 14px;
+  transition: border-bottom-width 0.1s;
+}
+.ft__field:focus-within {
+  border-bottom-width: 2.5px;
+}
+.ft__field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-family: var(--f-mono);
+  font-size: max(12px, 0.833vw);
+  line-height: 1.4;
+  padding: 0;
+}
+.ft__field input::placeholder {
+  color: var(--ink);
+  opacity: 0.9;
+}
+.ft__field input:focus-visible {
+  outline: none;
+}
+.ft__submit {
+  background: none;
+  border: 0;
+  padding: 4px;
+  flex: none;
+  transition: transform var(--speed) var(--ease);
+}
+.ft__submit:hover {
+  transform: translateX(4px);
+}
+.ft__submit svg {
+  width: max(28px, 2vw);
+  height: auto;
+}
+.ft__msg {
+  margin: 10px 0 0;
+  min-height: 1.4em;
+  font-family: var(--f-mono);
+  font-size: 12px;
+}
+.ft__done {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 0;
+  font-family: var(--f-mono);
+  font-size: max(12px, 0.833vw);
+  line-height: 1.5;
+  padding: 14px 16px;
+  border: var(--rule) solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--hi);
+}
+.ft__done img {
+  width: 46px;
+  height: auto;
+  flex: none;
+}
+.ft__again {
+  display: block;
+  margin-top: 6px;
+  padding: 0;
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  font-family: var(--f-mono);
+  font-size: inherit;
+}
+.ft__stamp {
+  width: 11.74vw;
+  min-width: 130px;
+}
+.ft__stamp img {
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 749px) {
+  .ft__stamp {
+    width: min(50vw, 200px);
+    align-self: center;
+  }
+}
+.ft__cols {
+  display: flex;
+  gap: clamp(32px, 6vw, 110px);
+  flex-wrap: wrap;
+}
+.ft__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: max(12px, 1vw);
+}
+.ft__list a {
+  font-family: var(--f-text);
+  font-size: max(12.75px, 0.885vw);
+  line-height: 1.2;
+  text-decoration: none;
+}
+.ft__list a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+@media (max-width: 749px) {
+  .ft__cols {
+    gap: 28px 40px;
+  }
+}
+.ft__lockup-zone {
+  position: relative;
+  padding-inline: 10px;
+}
+.ft__lockup {
+  margin: 0;
+  text-align: center;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 14.6vw;
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+}
+.ft__ornament {
+  pointer-events: none;
+  position: absolute;
+  left: 84vw;
+  top: -1.4vw;
+  width: 6.2vw;
+  height: auto;
+  transform: rotate(14deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ft__ornament {
+    animation: bob 3.2s ease-in-out infinite;
+  }
+}
+@keyframes bob {
+  50% {
+    transform: rotate(4deg) translateY(-6px);
+  }
+}
+@media (max-width: 749px) {
+  .ft__lockup {
+    white-space: normal;
+    font-size: 17.8vw;
+    line-height: 0.95;
+  }
+  .ft__ornament {
+    left: auto;
+    top: auto;
+    right: 8%;
+    bottom: 4%;
+    width: 44px;
+  }
+}
+.ft__social {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+.ft__legal,
+.ft__copy {
+  margin: 0;
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  padding-inline: 20px;
+}
