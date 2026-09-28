@@ -1,6 +1,6 @@
 // Lazy-loaded WebGL part of the sock viewer (three + R3F + drei live in their own chunk).
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { ContactShadows, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -122,6 +122,19 @@ function Rig({ ctrl, children }) {
   return <group ref={group}>{children}</group>;
 }
 
+// Keep the whole sock in frame: back the camera off when the canvas is too narrow for its width.
+function Fit({ zoom }) {
+  const { camera, size } = useThree();
+  useLayoutEffect(() => {
+    const k = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const byHeight = 6.6 / zoom;
+    const byWidth = (SOCK_W * 1.12) / (0.92 * k * (size.width / Math.max(size.height, 1)));
+    camera.position.z = Math.max(byHeight, byWidth);
+    camera.updateProjectionMatrix();
+  }, [camera, size, zoom]);
+  return null;
+}
+
 function Ready({ onReady }) {
   useEffect(() => {
     const id = requestAnimationFrame(() => onReady?.());
@@ -142,9 +155,11 @@ export default function SockScene({ n, glb, ctrl, active, onReady, shadow = true
       style={{ touchAction: 'pan-y' }}
       aria-hidden="true"
     >
-      <ambientLight intensity={0.92} />
-      <directionalLight position={[1.2, 1.8, 5]} intensity={0.3} />
-      <directionalLight position={[-4, 1, -4]} intensity={0.45} />
+      <Fit zoom={zoom} />
+      {/* three's Lambert divides by π, so intensities are in π units: front faces land at ~1.0× the photo */}
+      <ambientLight intensity={Math.PI * 0.76} />
+      <directionalLight position={[1.2, 1.8, 5]} intensity={Math.PI * 0.3} />
+      <directionalLight position={[-4, 1, -4]} intensity={Math.PI * 0.4} />
       <Suspense fallback={null}>
         <Rig ctrl={ctrl}>{glb ? <GlbSock url={glb} /> : <PuffySock n={n} />}</Rig>
         {shadow && <ContactShadows position={[0, -SOCK_H / 2 - 0.12, 0]} scale={4} blur={2.8} opacity={0.32} far={2.5} resolution={256} color="#1a0f1f" />}

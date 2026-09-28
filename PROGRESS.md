@@ -25,7 +25,13 @@
   - [x] /checkout: "Counting to one…" beat → "Your sock is on its way to find its other half." with the sock drifting toward a ghost twin, fake receipt; order kept in sessionStorage for reloads
   - [x] 360°: drag with inertia + fling, idle auto-rotate, hover pauses, arrow keys rotate; hero + spin section rotate with scroll
   - [x] `scripts/interactions.mjs` verifies qty tooltip, drag, fly/drawer, dupe toast, persistence, quick add, checkout, newsletter
-- [ ] **Step 5 — About / FAQ / 404 + mobile + motion polish + performance**
+- [x] **Step 5 — About / FAQ / 404 + mobile + motion polish + performance**
+  - [x] /about manifesto (4 tenets, sticky parallax photo, numbers strip, spinning sock), /faq (11 Qs, sticky side + starburst), /contact (fake form + success), /legal/:page (terms, privacy, returns), 404 "This page has a hole in it." with a toe bobbing through the 0
+  - [x] `scripts/overflow.mjs`: no horizontal scroll on any page at 375 / 768 / 1440
+  - [x] Tablet PDP: thumbs move under the main box; 3D camera backs off when the frame is too narrow
+  - [x] 3D lighting in π units so the sock matches the photo colours
+  - [x] Reduced motion: no Lenis, no scrubs/intros, no auto-rotate, static marquees/grain; content fully visible
+  - [x] Perf: ~200 KB gz initial JS; three.js/R3F (265 KB gz) only loads when a sock enters the viewport, after idle; all below-fold images lazy + responsive WebP
 - [ ] **Step 6 — Final pass: build, screenshot review, fixes, README**
 
 ## What Vibe is made of (analysis notes)
@@ -81,4 +87,4 @@
 
 ## What's next
 
-Step 5: About / FAQ / Contact / Legal / 404 pages, mobile pass at 375/768, reduced-motion check, performance (bundle, images).
+Step 6: final build, full screenshot review at 375/768/1440, fix leftovers, README (run + deploy to Vercel, incl. SPA rewrite).

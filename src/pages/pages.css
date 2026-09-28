@@ -1,5 +1,6 @@
 /* ================= COLLECTION (Vibe PLP) ================= */
 .plp {
+  overflow-x: clip;
   background: var(--sec-bg, var(--cream));
   color: var(--sec-fg, var(--ink));
   transition: background-color 0.55s var(--ease), color 0.55s var(--ease);
@@ -418,5 +419,36 @@
   }
   .pdp__spec {
     grid-template-columns: 42% 1fr;
+  }
+}
+
+/* tablet: two columns stay, but the thumbs drop under the main box so it can be wide */
+@media (min-width: 750px) and (max-width: 1023px) {
+  .pdp__gallery {
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-self: start;
+    gap: 12px;
+  }
+  .pdp__thumbs {
+    flex-direction: row;
+    width: 100%;
+    gap: 12px;
+  }
+  .pdp__thumb {
+    width: 72px;
+    flex: none;
+  }
+  .pdp__main {
+    flex: none;
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+  }
+  .pdp__info {
+    padding-inline: 2vw 0;
+  }
+  .pdp__buy {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
