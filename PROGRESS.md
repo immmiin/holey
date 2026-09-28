@@ -20,7 +20,11 @@
   - [x] /shop: title, filter pills (All / Pastel / Neutral), count ("6 Socks · 0 Pairs"), sort dropdown, ruled 4-col grid with Vibe's two wide cards, Motion layout animation, hover tints section
   - [x] /socks/:slug: thumbs + outlined main box (3D drag viewer default), overline, title, copy, fake specs, locked qty (wiggle + "It's one sock." tooltip), ADD TO CART, logo takes the sock's accent; then testimonials, banner, "You may also like…"
   - [x] Unknown slug renders the 404
-- [ ] **Step 4 — Cart drawer + checkout ending + 360° rotation + 3D hero**
+- [x] **Step 4 — Cart drawer + checkout ending + 360° rotation + 3D hero**
+  - [x] Cart drawer (focus trap, Esc, scroll lock, localStorage, cross-tab sync), fly-to-cart arc, washing-machine spin + bubble pop, duplicate-add toast
+  - [x] /checkout: "Counting to one…" beat → "Your sock is on its way to find its other half." with the sock drifting toward a ghost twin, fake receipt; order kept in sessionStorage for reloads
+  - [x] 360°: drag with inertia + fling, idle auto-rotate, hover pauses, arrow keys rotate; hero + spin section rotate with scroll
+  - [x] `scripts/interactions.mjs` verifies qty tooltip, drag, fly/drawer, dupe toast, persistence, quick add, checkout, newsletter
 - [ ] **Step 5 — About / FAQ / 404 + mobile + motion polish + performance**
 - [ ] **Step 6 — Final pass: build, screenshot review, fixes, README**
 
@@ -71,9 +75,10 @@
 - Fonts: Fraunces (soft, chunky optical-size serif) is the closest free match for VC Henrietta.
 - Page transitions: react-router `viewTransition` links (same View Transitions API Vibe uses cross-document), custom fade/rise keyframes, disabled for reduced motion.
 - 3D fallback = puffy mesh generated from the PNG alpha (distance field → depth), front + back surfaces, Lambert lighting, ContactShadows. Hero sock sways idle instead of spinning freely so it never parks edge-on.
+- Logo accent is a small stack (`src/lib/accent.js`); cards/tiles release on unmount because navigating mid-hover never fires pointerleave.
 - CSS import order: global.css is imported first in main.jsx so component CSS can override shared utilities.
 - Playwright runs against the system Google Chrome (`channel: 'chrome'`) — no browser download needed.
 
 ## What's next
 
-Step 4: checkout ending screen, cart polish, verify fly-to-cart / spin / drag inertia with Playwright interaction script.
+Step 5: About / FAQ / Contact / Legal / 404 pages, mobile pass at 375/768, reduced-motion check, performance (bundle, images).

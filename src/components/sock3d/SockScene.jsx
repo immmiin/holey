@@ -38,8 +38,8 @@ function usePuffyGeometry(image) {
       }
     const geo = new THREE.PlaneGeometry(SOCK_W, SOCK_H, SX - 1, SY - 1);
     const pos = geo.attributes.position;
-    const DEPTH = 0.14;
-    const SAT = 9; // samples until full puff
+    const DEPTH = 0.1;
+    const SAT = 11; // samples until full puff
     for (let i = 0; i < pos.count; i++) {
       const ix = i % SX;
       const iy = (i / SX) | 0; // plane rows run top -> bottom, same as the canvas

@@ -50,6 +50,7 @@ function CartButton({ className = '' }) {
 
 function SockTile({ p, onNavigate, variant = 'mega' }) {
   const release = useRef(null);
+  useEffect(() => () => release.current?.(), []);
   return (
     <Link
       to={`/socks/${p.slug}`}

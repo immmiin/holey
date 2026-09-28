@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { holeSrc, holeSrcSet, logoColor, money, sockSrc, sockSrcSet } from '../data/products.js';
 import { useCart } from '../context/CartContext.jsx';
@@ -10,6 +10,8 @@ export default function ProductCard({ p, onHover, wide = false, className = '', 
   const cart = useCart();
   const img = useRef(null);
   const release = useRef(null);
+  // navigating away mid-hover never fires pointerleave — release the logo accent on unmount
+  useEffect(() => () => release.current?.(), []);
 
   const enter = () => {
     release.current?.();
