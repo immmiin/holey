@@ -25,7 +25,8 @@ function geometry(width, count, mobile) {
   const sockH = sockW * 1.25;
   const tagH = 64;
   // room for the sag (weighted rope dips ~9% of its span) + swing
-  const height = ROPE_Y + sockH + tagH + (stageW - pad * 2) * 0.085 + (mobile ? 50 : 70);
+  // phones: tighter bottom margin (desktop value unchanged)
+  const height = ROPE_Y + sockH + tagH + (stageW - pad * 2) * 0.085 + (mobile ? 14 : 70);
   return { stageW, pad, slot, sockW, sockH, height };
 }
 

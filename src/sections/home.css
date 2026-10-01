@@ -1178,3 +1178,124 @@
     height: 40px;
   }
 }
+.laundry__poster {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+.laundry__poster.is-hidden {
+  opacity: 0;
+}
+.laundry__tap {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(10px, 4%, 32px);
+  translate: -50% 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 20px;
+  border: var(--line) solid var(--ink);
+  border-radius: 999px;
+  background: var(--hi);
+  box-shadow: var(--shadow-sm);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.laundry__tap svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ================= phones only (≤767px) ================= */
+@media (max-width: 767px) {
+  :root {
+    --section: 48px;
+  }
+
+  /* hero: whole machine visible under the slim nav; polaroid tucked on the machine, clear of nav + headline */
+  .hero2 {
+    padding-top: calc(var(--nav-h) + 22px);
+    padding-bottom: 28px;
+    gap: 30px;
+  }
+  .machine {
+    width: min(310px, 78vw);
+    padding: 14px 16px 22px;
+    gap: 12px;
+  }
+  .machine__knob {
+    width: 38px;
+    height: 38px;
+  }
+  .machine__screen {
+    padding: 5px 10px;
+    font-size: 0.72rem;
+  }
+  .hero2__sticker {
+    top: 6px;
+    right: max(0px, calc(50% - min(310px, 78vw) / 2 - 22px));
+    width: 76px;
+  }
+  .hero2__polaroid {
+    left: auto;
+    right: max(-4px, calc(50% - min(310px, 78vw) / 2 - 30px));
+    bottom: -26px;
+    width: 92px;
+    padding: 6px 6px 22px;
+    transform: rotate(7deg);
+    font-size: 0.68rem;
+  }
+  .hero2__polaroid figcaption {
+    bottom: 4px;
+  }
+  .hero2__polaroid .tape {
+    width: 56px;
+    height: 18px;
+  }
+  .hero2__text {
+    gap: 14px;
+  }
+
+  /* crossing tapes: stack instead of overlap so every word is readable */
+  .tape-cross {
+    padding-block: 26px;
+  }
+  .tape-cross .tapem-clip + .tapem-clip {
+    margin-top: 10px;
+  }
+  .tapem {
+    padding-block: 9px;
+  }
+  .tapem__item {
+    font-size: 1.15rem;
+    gap: 18px;
+  }
+  .tapem__strip {
+    gap: 18px;
+    padding-inline-end: 18px;
+  }
+
+  /* trim the leftover air */
+  .line-sec {
+    padding-bottom: 20px;
+  }
+  .line-sec__head {
+    margin-bottom: 0;
+  }
+  .line-sec__cta {
+    margin-top: 0;
+  }
+  .rcpt__row {
+    padding-bottom: 24px;
+  }
+  .missing__side {
+    gap: 12px;
+  }
+  .lf__say {
+    margin: 12px 0 16px;
+  }
+}

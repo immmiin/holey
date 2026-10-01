@@ -133,3 +133,12 @@ Goal: keep the mood (cream, Holey Green / Nail Pink, grain, deadpan copy, logo, 
 - Added a small pause/play button on the video (not native controls) for WCAG 2.2.2 — remove `.laundry__pause` if unwanted.
 - Video files renamed from `*_1.mp4`, `*_4.webm`, `*poster_1.png` to the documented names. No older intro video existed.
 - Checks: `node scripts/video-check.mjs` (lazy load, autoplay, pause, reduced motion), overflow 0, interactions pass at 1440/375, build passes.
+
+## Update — mobile-only fixes (≤767px)
+- Nav: on phones the tag is slim and pinned top-left on an opaque cream strip (`--nav-h: 62px`); pages already pad by `--nav-h`, so nothing sits under it and content scrolls *under* the strip rather than behind a floating pill.
+- Laundry Day video (all sizes — iPads ≥768 hit the same iOS rule; desktop looks identical): `muted` set as property, `defaultMuted` and *attribute* via ref before every play(); MP4 `<source>` first; play() called from the IntersectionObserver with the promise caught; poster `<img>` stays on top until `playing`; if autoplay is refused (Low Power Mode) a "Tap to play" button shows over the poster. Pause button appears only once playing.
+- Hero (phones): machine shrunk to fit fully under the nav, "H!" sticker and polaroid moved onto the machine's top/bottom-right corners, clear of nav and headline.
+- Crossing tapes (phones): stacked with a gap instead of overlapping; smaller type so the words fit.
+- Gaps (phones): `--section` 48px, tighter clothesline/receipts/line-sec spacing.
+- Testing: `scripts/mobile-check.mjs` (Chromium 375/390 + WebKit iPhone 14/375: section shots, nav overlap, hero geometry, video playback), `scripts/video-blocked.mjs` (simulated Low Power Mode), `scripts/mobile-pages.mjs`, `scripts/desktop-baseline.mjs` + `desktop-compare.mjs` (768/1024/1440 layout fingerprint + reduced-motion pixels before/after).
+- WebKit note: Playwright ≥1.57 can't drive WebKit on macOS 14; run the WebKit checks with `PW_WEBKIT=<path to playwright@1.56.1>/index.mjs`.
