@@ -126,3 +126,10 @@ Goal: keep the mood (cream, Holey Green / Nail Pink, grain, deadpan copy, logo, 
 - Physics hand-rolled (verlet + pendulums, simple sticker integrator) instead of matter.js: ~200 lines, no extra 80KB dependency, runs only while visible.
 - Route transition swaps `<Routes location>` only once the door has closed, so the old page never visibly jumps.
 - Lost & Found "twin" is the same photo mirrored + hue-rotated, so it *almost* matches.
+
+## Update 2026-10-01 — fixed wordmark + Laundry Day intro
+- Wordmark: `public/logo/holey-wordmark-currentColor.svg` (fixed "y") is now the single source. `Logo.jsx` imports it raw, strips its C2PA metadata, trims padding; colour stays `currentColor` → `--logo-base` #1F5B3A (sock accent on hover/PDP). Old `holey_01_*` files and the `src/assets/wordmark.svg` copy are gone. OG image/favicons use the bubble and H icon (not the wordmark); regenerated — unchanged.
+- Video: `src/sections/LaundryDay.jsx`, full-width 16:9 right after the hero. muted/loop/playsInline/autoplay, no native controls, `preload="none"` with sources attached only when ≥1% is on screen, pauses when scrolled away. WebM first, MP4 fallback. Poster = WebP versions of the PNG (`-960/-1920.webp`, 6–13 KB vs 866 KB). Reduced motion → poster `<img>` only, video never requested.
+- Added a small pause/play button on the video (not native controls) for WCAG 2.2.2 — remove `.laundry__pause` if unwanted.
+- Video files renamed from `*_1.mp4`, `*_4.webm`, `*poster_1.png` to the documented names. No older intro video existed.
+- Checks: `node scripts/video-check.mjs` (lazy load, autoplay, pause, reduced motion), overflow 0, interactions pass at 1440/375, build passes.

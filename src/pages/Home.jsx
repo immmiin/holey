@@ -1,5 +1,6 @@
 import Hero from '../sections/Hero.jsx';
 import LineUp from '../sections/LineUp.jsx';
+import LaundryDay from '../sections/LaundryDay.jsx';
 import CareLabel from '../sections/CareLabel.jsx';
 import Missing from '../sections/Missing.jsx';
 import LostFound from '../sections/LostFound.jsx';
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <LaundryDay />
       <LineUp items={products} />
       <div className="tape-cross" aria-hidden="false">
         <Tape items={['One sock only', 'Hole included', 'No pairs', 'No refunds on feelings']} tilt={-3} />
