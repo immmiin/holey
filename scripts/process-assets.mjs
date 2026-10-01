@@ -25,7 +25,9 @@ async function removeWhite(src, dest) {
   const isBgColor = (i) => {
     const r = data[i * 3], g = data[i * 3 + 1], b = data[i * 3 + 2];
     const mn = Math.min(r, g, b), mx = Math.max(r, g, b);
-    return mn >= 238 && mx - mn <= 12;
+    // near-white studio background, or the neutral-grey floor shadow under the toe
+    // (the cream knit is always a little warm, so it stays: its R-B spread is > 9)
+    return (mn >= 238 && mx - mn <= 12) || (mn >= 165 && mx - mn <= 9);
   };
   // flood fill from every border pixel so white areas *inside* the sock survive
   const bg = new Uint8Array(n);
@@ -41,6 +43,28 @@ async function removeWhite(src, dest) {
     if (x < w - 1) stack.push(i + 1);
     if (y > 0) stack.push(i - w);
     if (y < h - 1) stack.push(i + w);
+  }
+  // keep only the largest connected foreground blob — drops shadow speckles near the floor
+  {
+    const label = new Int32Array(n);
+    let best = 0, bestSize = 0, id = 0;
+    for (let s0 = 0; s0 < n; s0++) {
+      if (bg[s0] || label[s0]) continue;
+      id++;
+      let size = 0;
+      const q = [s0];
+      label[s0] = id;
+      while (q.length) {
+        const i = q.pop();
+        size++;
+        const x = i % w, y = (i / w) | 0;
+        for (const j of [x > 0 ? i - 1 : -1, x < w - 1 ? i + 1 : -1, y > 0 ? i - w : -1, y < h - 1 ? i + w : -1]) {
+          if (j >= 0 && !bg[j] && !label[j]) { label[j] = id; q.push(j); }
+        }
+      }
+      if (size > bestSize) { bestSize = size; best = id; }
+    }
+    for (let i = 0; i < n; i++) if (!bg[i] && label[i] !== best) bg[i] = 1;
   }
   // hard mask -> soft edge
   const mask = Buffer.alloc(n);
