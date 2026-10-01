@@ -2,65 +2,60 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { products } from '../data/products.js';
-import { ArrowLong, Instagram, TikTok, XLogo } from './Icons.jsx';
-import Pop from './motion/Pop.jsx';
+import Btn from './Btn.jsx';
+import { Instagram, TikTok, XLogo } from './Icons.jsx';
 import './footer.css';
 
-function Newsletter() {
+function Report() {
   const [email, setEmail] = useState('');
-  const [state, setState] = useState('idle'); // idle | error | done
-
+  const [state, setState] = useState('idle');
   const submit = (e) => {
     e.preventDefault();
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      setState('error');
-      return;
-    }
+    if (!/^\S+@\S+\.\S+$/.test(email)) return setState('error');
     setState('done');
   };
-
   return (
-    <div className="ft__news">
-      <h2 className="ft__news-heading">Get notified when we lose more socks.</h2>
+    <div className="report card-ink">
+      <p className="kicker report__kicker">Form LS-1 · Lost sock report</p>
       <AnimatePresence mode="wait" initial={false}>
         {state === 'done' ? (
-          <motion.p
+          <motion.div
             key="done"
-            className="ft__done"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
+            className="report__done"
             role="status"
+            initial={{ scale: 0.6, rotate: -8, opacity: 0 }}
+            animate={{ scale: 1, rotate: -2, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 420, damping: 13 }}
           >
-            <img src="/logo/holey_07_nail-icon-H-exclaim.svg" alt="" width="46" height="36" />
-            <span>
-              You're on the list. We'll email you the moment something goes missing.
-              <button type="button" className="ft__again" onClick={() => (setEmail(''), setState('idle'))}>
-                Add another inbox
-              </button>
-            </span>
-          </motion.p>
+            <span className="report__stamp">Filed</span>
+            <p>You’re on the list. We’ll email you the moment we lose more socks.</p>
+            <button type="button" className="report__again" onClick={() => (setEmail(''), setState('idle'))}>
+              File another
+            </button>
+          </motion.div>
         ) : (
-          <motion.form key="form" className="ft__form" onSubmit={submit} noValidate exit={{ opacity: 0, y: -10 }}>
-            <label className="ft__field">
-              <span className="visually-hidden">Email</span>
+          <motion.form key="form" onSubmit={submit} noValidate exit={{ opacity: 0, y: -10 }}>
+            <label className="report__field">
+              <span>Get notified when we lose more socks.</span>
               <input
                 type="email"
                 name="email"
                 autoComplete="email"
-                placeholder="Email"
+                placeholder="your@email.com"
                 value={email}
                 onChange={(e) => (setEmail(e.target.value), state === 'error' && setState('idle'))}
                 aria-invalid={state === 'error' || undefined}
-                aria-describedby="ft-msg"
+                aria-describedby="report-msg"
               />
-              <button type="submit" className="ft__submit" aria-label="Subscribe">
-                <ArrowLong />
-              </button>
             </label>
-            <p id="ft-msg" className="ft__msg" aria-live="polite">
-              {state === 'error' ? "That email has a hole in it. Try again." : ' '}
-            </p>
+            <div className="report__row">
+              <p id="report-msg" className="report__msg small" aria-live="polite">
+                {state === 'error' ? 'That email has a hole in it.' : 'No spam. Just grief.'}
+              </p>
+              <Btn type="submit" tone="pink" tilt={2}>
+                Report it
+              </Btn>
+            </div>
           </motion.form>
         )}
       </AnimatePresence>
@@ -68,85 +63,70 @@ function Newsletter() {
   );
 }
 
+function TagList({ title, children, tilt }) {
+  return (
+    <div className="ftag" style={{ '--tilt': `${tilt}deg` }}>
+      <span className="ftag__hole" aria-hidden="true" />
+      <p className="ftag__title">{title}</p>
+      <ul>{children}</ul>
+    </div>
+  );
+}
+
 export default function Footer() {
   return (
-    <footer className="ft">
-      <div className="rule ft__divider" aria-hidden="true" />
-      <div className="ft__row">
-        <div className="ft__left">
-          <Newsletter />
-          <Pop className="ft__stamp" rotate={-8}>
-            <img src="/logo/holey_06_badge-oval.svg" alt="Holey oval badge" width="1350" height="930" loading="lazy" />
-          </Pop>
+    <footer className="foot">
+      <svg className="foot__wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 60V30C80 6 160 6 240 30s160 24 240 0 160-24 240 0 160 24 240 0 160-24 240 0 160 24 240 0v30Z" />
+      </svg>
+      <div className="foot__inner wrap">
+        <div className="foot__top">
+          <h2 className="h2 foot__title">
+            Lost a sock?
+            <br />
+            So did we.
+          </h2>
+          <Report />
         </div>
-        <nav className="ft__cols" aria-label="Footer">
-          <ul className="ft__list">
-            {products.slice(0, 3).map((p) => (
+
+        <div className="foot__tags">
+          <TagList title="Socks" tilt={-3}>
+            {products.map((p) => (
               <li key={p.slug}>
-                <Link to={`/socks/${p.slug}`} viewTransition>
-                  {p.name}
-                </Link>
+                <Link to={`/socks/${p.slug}`}>{p.name}</Link>
               </li>
             ))}
-          </ul>
-          <ul className="ft__list">
-            {products.slice(3).map((p) => (
-              <li key={p.slug}>
-                <Link to={`/socks/${p.slug}`} viewTransition>
-                  {p.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <ul className="ft__list">
-            <li>
-              <Link to="/shop" viewTransition>All Socks</Link>
-            </li>
-            <li>
-              <Link to="/about" viewTransition>About</Link>
-            </li>
-            <li>
-              <Link to="/faq" viewTransition>FAQ</Link>
-            </li>
-            <li>
-              <Link to="/contact" viewTransition>Contact</Link>
-            </li>
-          </ul>
-          <ul className="ft__list">
-            <li>
-              <Link to="/legal/terms" viewTransition>Terms of Wear</Link>
-            </li>
-            <li>
-              <Link to="/legal/privacy" viewTransition>Privacy (Toes Excluded)</Link>
-            </li>
-            <li>
-              <Link to="/legal/returns" viewTransition>Returns &amp; Feelings</Link>
-            </li>
-          </ul>
-        </nav>
+          </TagList>
+          <TagList title="Holey" tilt={2}>
+            <li><Link to="/shop">Shop all</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/faq">FAQ</Link></li>
+            <li><Link to="/#lost-and-found">Lost &amp; Found</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+          </TagList>
+          <TagList title="Fine print" tilt={-1.5}>
+            <li><Link to="/legal/terms">Terms of Wear</Link></li>
+            <li><Link to="/legal/privacy">Privacy (Toes Excluded)</Link></li>
+            <li><Link to="/legal/returns">Returns &amp; Feelings</Link></li>
+          </TagList>
+          <img className="foot__bubble" src="/logo/holey_05_bubble-pink.svg" alt="Holey" width="1620" height="930" loading="lazy" />
+        </div>
+
+        <div className="foot__bottom">
+          <div className="foot__social">
+            <a className="round-btn" href="https://instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram (fake account)">
+              <Instagram />
+            </a>
+            <a className="round-btn" href="https://tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok (fake account)">
+              <TikTok />
+            </a>
+            <a className="round-btn" href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X (fake account)">
+              <XLogo />
+            </a>
+          </div>
+          <p className="small">© {new Date().getFullYear()} Holey. One sock reserved. A graphic design school project — no socks were sold.</p>
+        </div>
       </div>
-      <div className="rule ft__divider" aria-hidden="true" />
-      <div className="ft__lockup-zone">
-        <p className="ft__lockup" aria-label="Wear it holey.">
-          Wear it holey.
-        </p>
-        <img className="ft__ornament" src="/logo/holey_04_nail-icon-holey.svg" alt="" loading="lazy" width="1110" height="1290" />
-      </div>
-      <div className="ft__social">
-        <a className="circle-btn" href="https://instagram.com/" target="_blank" rel="noreferrer" aria-label="Holey on Instagram (fake)">
-          <Instagram />
-        </a>
-        <a className="circle-btn" href="https://tiktok.com/" target="_blank" rel="noreferrer" aria-label="Holey on TikTok (fake)">
-          <TikTok />
-        </a>
-        <a className="circle-btn" href="https://x.com/" target="_blank" rel="noreferrer" aria-label="Holey on X (fake)">
-          <XLogo />
-        </a>
-      </div>
-      <p className="ft__legal">Please wear responsibly. One foot at a time.</p>
-      <p className="ft__copy">
-        Copyright ©{new Date().getFullYear()}. Holey. All rights reserved. The other sock reserves none.
-      </p>
     </footer>
   );
 }

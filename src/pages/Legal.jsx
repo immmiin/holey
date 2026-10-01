@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 import NotFound from './NotFound.jsx';
 import useTitle from '../lib/useTitle.js';
-import './info.css';
+import './pages.css';
 
 const pages = {
   terms: {
@@ -17,7 +17,7 @@ const pages = {
   privacy: {
     title: 'Privacy (Toes Excluded)',
     items: [
-      'We store your cart in your own browser. It never leaves. Much like a sock in a dryer, it just stays there.',
+      'Your basket and sticker board live in your own browser. They never leave. Much like a sock in a dryer, they just stay there.',
       'We don’t collect payment details, because there is no payment.',
       'Your toes are visible through the hole. That’s on you.',
       'Newsletter sign-ups go nowhere. It’s a front-end demo. Your inbox is safe.'
@@ -40,16 +40,16 @@ export default function Legal() {
   useTitle(doc ? doc.title : 'Not found');
   if (!doc) return <NotFound />;
   return (
-    <section className="legal">
-      <p className="t-mono">Legal-ish · Last updated whenever we lost another sock</p>
-      <h1 className="legal__title">{doc.title}</h1>
-      <ol className="legal__list">
-        {doc.items.map((t, i) => (
-          <li key={i} className="t-mono">
-            {t}
-          </li>
-        ))}
-      </ol>
+    <section className="legal2 wrap">
+      <div className="legal2__paper card-ink stitched">
+        <p className="kicker">Legal-ish · Last updated whenever we lost another sock</p>
+        <h1 className="h2">{doc.title}</h1>
+        <ol>
+          {doc.items.map((t, i) => (
+            <li key={i}>{t}</li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }

@@ -1,9 +1,9 @@
-import { Accordion } from '../sections/ValueAccordion.jsx';
-import Wipe from '../components/motion/Wipe.jsx';
-import Oval from '../components/Oval.jsx';
-import { StarBadge } from '../sections/Rituals.jsx';
+import Accordion from '../components/Accordion.jsx';
+import BounceText from '../components/motion/BounceText.jsx';
+import Pop from '../components/motion/Pop.jsx';
+import Btn from '../components/Btn.jsx';
 import useTitle from '../lib/useTitle.js';
-import './info.css';
+import './pages.css';
 
 const faqs = [
   { title: 'Where’s the other one?', body: 'We don’t know. Nobody knows. That’s sort of the whole thing.' },
@@ -22,20 +22,20 @@ const faqs = [
 export default function Faq() {
   useTitle('FAQ');
   return (
-    <section className="faq">
-      <div className="faq__side">
-        <p className="t-mono">Frequently asked, rarely answered</p>
-        <Wipe as="h1" text="Questions, with holes in them." className="faq__title" start="top 95%" end="top 30%" />
-        <div className="faq__badge-zone">
-          <StarBadge className="faq__badge" rotate={-12}>
-            No pairs were harmed
-          </StarBadge>
-        </div>
-        <p className="t-mono faq__more">Still confused? That’s fair.</p>
-        <Oval to="/contact">Ask us anyway</Oval>
+    <section className="faq2 wrap">
+      <div className="faq2__side">
+        <p className="kicker">Frequently asked, rarely answered</p>
+        <BounceText as="h1" immediate text={'Questions,\nwith holes\nin them.'} className="display faq2__title" />
+        <Pop className="faq2__sticker" rotate={-10}>
+          <img src="/logo/holey_07_nail-icon-H-exclaim.svg" alt="" width="1200" height="930" />
+        </Pop>
+        <p className="lead">Still confused? That’s fair.</p>
+        <Btn to="/contact" variant="care">
+          Ask us anyway
+        </Btn>
       </div>
-      <div className="faq__list">
-        <Accordion items={faqs} defaultOpen={0} />
+      <div className="faq2__list">
+        <Accordion items={faqs} />
       </div>
     </section>
   );

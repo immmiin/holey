@@ -96,3 +96,33 @@ Ideas / things to replace:
 - More lifestyle photos — only two exist, so the social wall, rituals and testimonial avatars reuse crops of them.
 - A dedicated hero photo/video if you want Vibe's full-bleed photographic hero instead of the green ground.
 - Lighthouse run on the deployed site.
+
+---
+
+# Redesign (branch `redesign`, started 2026-10-01)
+
+Goal: keep the mood (cream, Holey Green / Nail Pink, grain, deadpan copy, logo, products, 360°) but stop looking like vibebevvy.com. `main` is untouched; merge only when the owner says "merge".
+
+## Checklist
+- [x] Branch `redesign`; new sock photos re-cut (cutout now also removes the grey floor shadow + speckles, keeps largest blob)
+- [x] Type: Bagel Fat One (display, puffy — matches the bubble logo) + Nunito (body)
+- [x] Tokens: 3px ink outlines, hard offset shadows, sticker/tape/stitch surfaces (`src/styles/global.css`)
+- [x] Nav → floating clothing-tag pill with grommet hole + string, squishes on scroll velocity (spring), mobile drop-down tag menu (`Nav.jsx`)
+- [x] Buttons → sticker + laundry-care-label variants, spring squash on press (`Btn.jsx`)
+- [x] Product grid → physics clothesline: verlet rope + pendulum socks, cursor brushes swing them, drag/pull + fling, mobile horizontal swipe (`Clothesline.jsx`)
+- [x] Hole cursor: frayed hole mask revealing a pink nail-pattern layer, springy size, grows on interactive elements, off on touch (`HoleCursor.jsx`)
+- [x] Washing-machine page transition: iris closes with drum spin + bubbles, route swaps under it, iris opens (`WashTransition.jsx`, `App.jsx`)
+- [x] Lost & Found memory game: pairs are always "near matches" (twin is mirrored + hue-shifted), funny end screen + CTA (`LostFound.jsx`)
+- [x] Sticker board: all logo SVGs + 2 sock stickers, drag/fling with friction + wall bounce, stick where dropped, saved in localStorage, arrow-key accessible (`StickerBoard.jsx`)
+- [x] MISSING poster: photocopied sock, 8 tear-off tabs that tear and fall, reset when all gone (`Missing.jsx`)
+- [x] Jelly everywhere: buttons, basket icon catch, qty tooltip pop, chips, tags; add-to-cart flies into a **laundry basket**
+- [x] Hero 3D sock now spins inside a washing-machine porthole; PDP 360° viewer restyled as a hang tag with a grommet
+- [x] New section order — Home: machine hero → clothesline → crossing tapes → care label → MISSING → Lost & Found → receipts (reviews) → sticker board → green wavy footer with lost-sock-report form + hang-tag links
+- [x] Other pages rebuilt: Shop (line + "laundry pile" tag cards), PDP, About (taped notes, round badges, polaroids), FAQ (tag accordion), Contact, Legal, 404, Checkout
+- [x] Reduced motion: rope settles once and freezes, stickers just drop, transition is a fade, no bounce-in letters, cursor follows without spring
+- [x] Checks: `node scripts/redesign-ix.mjs` (desktop + 375), overflow 0 at 375/768/1440, no console errors, build passes
+
+## Decisions
+- Physics hand-rolled (verlet + pendulums, simple sticker integrator) instead of matter.js: ~200 lines, no extra 80KB dependency, runs only while visible.
+- Route transition swaps `<Routes location>` only once the door has closed, so the old page never visibly jumps.
+- Lost & Found "twin" is the same photo mirrored + hue-rotated, so it *almost* matches.

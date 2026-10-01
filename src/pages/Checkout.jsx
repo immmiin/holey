@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import Oval from '../components/Oval.jsx';
+import Btn from '../components/Btn.jsx';
 import { useCart } from '../context/CartContext.jsx';
 import { bySlug, money, sockSrc } from '../data/products.js';
 import { reducedMotion } from '../lib/scroll.js';
@@ -46,9 +46,9 @@ export default function Checkout() {
     return (
       <section className="co co--empty">
         <img src="/logo/holey_04_nail-icon-holey.svg" alt="" className="co__empty-icon" />
-        <h1 className="t-h2">Nothing to check out.</h1>
-        <p className="t-mono">Your cart is empty, which is also very on brand.</p>
-        <Oval to="/shop">Find the one</Oval>
+        <h1 className="h2">Nothing to check out.</h1>
+        <p className="lead">Your basket is empty, which is also very on brand.</p>
+        <Btn to="/shop">Find the one</Btn>
       </section>
     );
   }
@@ -67,8 +67,8 @@ export default function Checkout() {
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 1.1, ease: 'linear' }}
         />
-        <p className="t-h3">Counting to one…</p>
-        <p className="t-mono">No card needed. Payment is taken in good faith.</p>
+        <p className="h3">Counting to one…</p>
+        <p className="lead">No card needed. Payment is taken in good faith.</p>
       </section>
     );
   }
@@ -98,9 +98,9 @@ export default function Checkout() {
       </div>
 
       <motion.div className="co__copy" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
-        <p className="t-mono co__kicker">Order {order.id} · confirmed</p>
+        <p className="kicker co__kicker">Order {order.id} · confirmed</p>
         <h1 className="co__title">Your sock is on its way to find its other half.</h1>
-        <p className="co__sub t-mono">
+        <p className="co__sub lead">
           Estimated reunion: never, probably. We'll email you if it gets close. You were not charged — this is a school project, and the sock is
           fictional. Its feelings are not.
         </p>
@@ -115,28 +115,28 @@ export default function Checkout() {
               </span>
               <span className="co__name">
                 {p.name}
-                <span className="t-mono">{p.subtitle} · Qty 1</span>
+                <span className="lead">{p.subtitle} · Qty 1</span>
               </span>
-              <span className="t-mono">{money(p.price)}</span>
+              <span className="lead">{money(p.price)}</span>
             </li>
           ))}
         </ul>
         <div className="co__row">
-          <span className="t-mono">Shipping</span>
-          <span className="t-mono">Free. It’s light.</span>
+          <span className="lead">Shipping</span>
+          <span className="lead">Free. It’s light.</span>
         </div>
         <div className="co__row co__total">
           <span>Total</span>
           <span>{money(total)}</span>
         </div>
         <div className="co__row">
-          <span className="t-mono">Paid with</span>
-          <span className="t-mono">Good faith (declined, then approved)</span>
+          <span className="lead">Paid with</span>
+          <span className="lead">Good faith (declined, then approved)</span>
         </div>
       </motion.div>
 
       <div className="co__cta">
-        <Oval to="/shop">Lose another</Oval>
+        <Btn to="/shop">Lose another</Btn>
       </div>
     </section>
   );

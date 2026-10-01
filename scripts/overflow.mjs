@@ -15,7 +15,7 @@ for (const w of [375, 768, 1440]) {
       if (over)
         for (const el of document.querySelectorAll('body *')) {
           const b = el.getBoundingClientRect();
-          if (b.right > W + 1 && getComputedStyle(el).position !== 'fixed' && !el.closest('.mq,.soc__marquee,.grid-sec__row,.rit__row,.spin,.hero,.ft__lockup-zone,.plp__filters'))
+          if (b.right > W + 1 && getComputedStyle(el).position !== 'fixed' && !el.closest('.cl--scroll,.rcpt__row,.tapem-clip,.tagmenu__socks'))
             bad.push(`${el.tagName.toLowerCase()}.${[...el.classList].join('.')} → ${Math.round(b.right)}`);
         }
       return { over, sw: document.documentElement.scrollWidth, bad: bad.slice(0, 5) };

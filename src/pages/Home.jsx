@@ -1,39 +1,30 @@
 import Hero from '../sections/Hero.jsx';
-import ProductRow from '../sections/ProductRow.jsx';
-import ValueAccordion from '../sections/ValueAccordion.jsx';
-import Testimonials from '../sections/Testimonials.jsx';
-import SpinSock from '../sections/SpinSock.jsx';
-import Banner from '../sections/Banner.jsx';
-import Story from '../sections/Story.jsx';
-import Rituals from '../sections/Rituals.jsx';
-import Marquee from '../components/Marquee.jsx';
+import LineUp from '../sections/LineUp.jsx';
+import CareLabel from '../sections/CareLabel.jsx';
+import Missing from '../sections/Missing.jsx';
+import LostFound from '../sections/LostFound.jsx';
+import Receipts from '../sections/Receipts.jsx';
+import StickerBoard from '../sections/StickerBoard.jsx';
+import Tape from '../components/Tape.jsx';
 import { products } from '../data/products.js';
 import useTitle from '../lib/useTitle.js';
+import '../sections/home.css';
 
 export default function Home() {
   useTitle(null);
   return (
     <>
       <Hero />
-      <ProductRow heading="Every sock loses something. This one started there." items={products.slice(0, 4)} />
-      <ValueAccordion />
-      <Testimonials />
-      <Marquee
-        className="mq-light"
-        items={['Worn In, Not Worn Out']}
-        repeat={8}
-        bg="var(--cream)"
-        size="13px"
-        iconSize="37px"
-        pad="36px"
-        gap="60px"
-        innerGap="60px"
-        icon="/logo/holey_04_nail-icon-holey.svg"
-      />
-      <SpinSock />
-      <Banner />
-      <Story />
-      <Rituals />
+      <LineUp items={products} />
+      <div className="tape-cross" aria-hidden="false">
+        <Tape items={['One sock only', 'Hole included', 'No pairs', 'No refunds on feelings']} tilt={-3} />
+        <Tape items={['Do not pair', 'Wash with feelings', 'Left or right, who’s counting']} tone="pink" tilt={2.5} reverse speed={38} />
+      </div>
+      <CareLabel />
+      <Missing />
+      <LostFound />
+      <Receipts />
+      <StickerBoard />
     </>
   );
 }

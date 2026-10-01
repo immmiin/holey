@@ -1,17 +1,17 @@
-import { lazy, Suspense, useEffect, useLayoutEffect } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router';
+import { MotionConfig } from 'motion/react';
 import { CartProvider } from './context/CartContext.jsx';
 import Grain from './components/Grain.jsx';
-import Marquee from './components/Marquee.jsx';
-import Header from './components/Header.jsx';
+import Nav from './components/Nav.jsx';
 import Footer from './components/Footer.jsx';
-import CartDrawer from './components/CartDrawer.jsx';
+import BasketDrawer from './components/BasketDrawer.jsx';
 import Toast from './components/Toast.jsx';
-import Social from './sections/Social.jsx';
+import HoleCursor from './components/HoleCursor.jsx';
+import WashTransition from './components/WashTransition.jsx';
 import Home from './pages/Home.jsx';
-import { initScroll, scrollToTop, ScrollTrigger } from './lib/scroll.js';
+import { initScroll, scrollTo, scrollToTop, ScrollTrigger } from './lib/scroll.js';
 
-// everything but the home page is split out
 const Shop = lazy(() => import('./pages/Shop.jsx'));
 const Product = lazy(() => import('./pages/Product.jsx'));
 const About = lazy(() => import('./pages/About.jsx'));
@@ -21,43 +21,60 @@ const Checkout = lazy(() => import('./pages/Checkout.jsx'));
 const Legal = lazy(() => import('./pages/Legal.jsx'));
 const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 
-const topline = ['One sock only', 'Hole included', 'No pairs', 'No refunds on feelings', 'Pre-distressed by hand', 'Left or right, who’s counting'];
+const samePage = (a, b) => a.pathname === b.pathname && a.search === b.search;
 
-function RouteEffects() {
-  const { pathname } = useLocation();
-  useLayoutEffect(() => {
-    scrollToTop();
-  }, [pathname]);
-  useEffect(() => {
-    // new page → new layout: re-measure every ScrollTrigger once things settle
-    const t = setTimeout(() => ScrollTrigger.refresh(), 250);
-    return () => clearTimeout(t);
-  }, [pathname]);
-  return null;
+function scrollToHash(hash) {
+  if (!hash) return;
+  // give lazy sections a beat to mount
+  setTimeout(() => {
+    const el = document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (el) scrollTo(el, { offset: -100 });
+  }, 120);
 }
 
-export default function App() {
-  const { pathname } = useLocation();
+/* Routes render `shown`, which only catches up with the real location once the
+   washing-machine door has closed over the screen. */
+function WashedRoutes() {
+  const location = useLocation();
+  const [shown, setShown] = useState(location);
+  const [phase, setPhase] = useState('idle');
+  const pending = useRef(location);
 
   useEffect(() => {
-    initScroll();
-    document.fonts?.ready.then(() => ScrollTrigger.refresh());
-    window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+    pending.current = location;
+    if (samePage(location, shown)) {
+      setShown(location);
+      scrollToHash(location.hash);
+      return;
+    }
+    setPhase((p) => (p === 'idle' ? 'cover' : p));
+  }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const covered = useCallback(() => {
+    const next = pending.current;
+    setShown(next);
+    scrollToTop();
+    setPhase('reveal');
   }, []);
 
+  const revealed = useCallback(() => {
+    // someone clicked again mid-spin: go round once more
+    if (!samePage(pending.current, shown)) setPhase('cover');
+    else setPhase('idle');
+  }, [shown]);
+
+  useEffect(() => {
+    if (phase !== 'reveal') return undefined;
+    scrollToHash(shown.hash);
+    const t = setTimeout(() => ScrollTrigger.refresh(), 300);
+    return () => clearTimeout(t);
+  }, [phase, shown]);
+
   return (
-    <CartProvider>
-      <a className="skip-link" href="#main">
-        Skip to content
-      </a>
-      <RouteEffects />
-      <div className="top-mq">
-        <Marquee items={topline} />
-      </div>
-      <Header />
+    <>
       <main id="main" className="page" tabIndex={-1}>
         <Suspense fallback={<div className="page-loading" aria-busy="true" />}>
-          <Routes>
+          <Routes location={shown}>
             <Route path="/" element={<Home />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/socks/:slug" element={<Product />} />
@@ -71,11 +88,32 @@ export default function App() {
           </Routes>
         </Suspense>
       </main>
-      {pathname !== '/checkout' && <Social />}
-      <Footer />
-      <CartDrawer />
-      <Toast />
-      <Grain />
-    </CartProvider>
+      <WashTransition phase={phase} onCovered={covered} onRevealed={revealed} />
+    </>
+  );
+}
+
+export default function App() {
+  useEffect(() => {
+    initScroll();
+    document.fonts?.ready.then(() => ScrollTrigger.refresh());
+    window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+  }, []);
+
+  return (
+    <MotionConfig reducedMotion="user">
+      <CartProvider>
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
+        <Nav />
+        <WashedRoutes />
+        <Footer />
+        <BasketDrawer />
+        <Toast />
+        <Grain />
+        <HoleCursor />
+      </CartProvider>
+    </MotionConfig>
   );
 }

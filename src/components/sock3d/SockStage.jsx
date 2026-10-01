@@ -228,7 +228,7 @@ export default function SockStage({
         </Boundary>
       )}
       {drag && hint && (
-        <span className={`sock3d__hint t-mono ${touched ? 'is-hidden' : ''}`} aria-hidden="true">
+        <span className={`sock3d__hint small ${touched ? 'is-hidden' : ''}`} aria-hidden="true">
           <Rotate /> Drag to rotate
         </span>
       )}
